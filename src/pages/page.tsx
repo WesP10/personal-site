@@ -2,55 +2,33 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const initialLocations = [
-    { top: '5%', left: '14%' },
-    { top: '25%', left: '80%' },
-    { top: '40%', left: '35%' },
-    { top: '70%', left: '60%' },
-    { top: '97%', left: '40%' },
-  ];
-
-  const [gradientLocations, setGradientLocations] = useState(initialLocations);
-
-  const generateLocations = () => {
-    const newLocations: { top: string; left: string }[] = [];
-    let top30Count = 0;
-
-    while (newLocations.length < 5) {
-      const top = `${Math.random() * 100}%`;
-      const left = `${Math.random() * 100}%`;
-
-      const topValue = parseFloat(top);
-      const leftValue = parseFloat(left);
-
-      // Ensure no overlap
-      const isValid = newLocations.every((location) => {
-        const existingTop = parseFloat(location.top);
-        const existingLeft = parseFloat(location.left);
-        const distance = Math.sqrt(
-          Math.pow(topValue - existingTop, 2) + Math.pow(leftValue - existingLeft, 2)
-        );
-        return distance > 64; // Minimum distance of 64px
-      });
-
-      // Ensure at least two circles in the top 30%
-      if (isValid && (topValue <= 30 || top30Count < 2)) {
-        newLocations.push({ top, left });
-        if (topValue <= 30) {
-          top30Count++;
-        }
-      }
-    }
-
-    return newLocations;
-  };
+  const [mouseY, setMouseY] = useState(0);
+  const [blockOffsets, setBlockOffsets] = useState<{[key: string]: number}>({});
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setGradientLocations(generateLocations());
-    }, 5000); // Shuffle positions every 5 seconds
-    return () => clearInterval(interval);
+    const handleMouseMove = (e: MouseEvent) => {
+      const newOffsets: {[key: string]: number} = {};
+      ['about-text-1', 'about-text-2'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          newOffsets[id] = e.clientY - rect.top;
+        }
+      });
+      setBlockOffsets(newOffsets);
+      setMouseY(e.clientY);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  function primaryMaskStyle(id: string) {
+    const y = blockOffsets[id] ?? 0;
+    return {
+      WebkitMask: `linear-gradient(to bottom, black 0%, black ${Math.max(0, y)}px, transparent ${Math.max(0, y)}px, transparent 100%)`,
+      mask: `linear-gradient(to bottom, black 0%, black ${Math.max(0, y)}px, transparent ${Math.max(0, y)}px, transparent 100%)`
+    };
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground relative">
@@ -97,15 +75,35 @@ export default function Home() {
               About Me
             </h2>
             <div className="space-y-6 text-lg leading-relaxed text-left text-muted-foreground">
-              <p className="hover:text-primary transition-colors duration-300">
-                I'm a Computer Science student at Cornell Engineering with a passion for building
-                innovative software solutions. My interests span full-stack development, machine learning,
-                and distributed systems.
+              <p className="relative" id="about-text-1">
+                <span className="text-muted-foreground">
+                  I'm a Computer Science student at Cornell Engineering with a passion for building
+                  innovative software solutions. My interests span full-stack development, machine learning,
+                  and distributed systems.
+                </span>
+                <span 
+                  className="absolute inset-0 text-primary pointer-events-none"
+                  style={primaryMaskStyle('about-text-1')}
+                >
+                  I'm a Computer Science student at Cornell Engineering with a passion for building
+                  innovative software solutions. My interests span full-stack development, machine learning,
+                  and distributed systems.
+                </span>
               </p>
-              <p className="hover:text-primary transition-colors duration-300">
-                Currently seeking summer 2025 internship opportunities where I can contribute to
-                meaningful projects and continue learning from experienced engineers. I enjoy
-                tackling complex problems and translating ideas into clean, efficient code.
+              <p className="relative" id="about-text-2">
+                <span className="text-muted-foreground">
+                  Currently seeking summer 2025 internship opportunities where I can contribute to
+                  meaningful projects and continue learning from experienced engineers. I enjoy
+                  tackling complex problems and translating ideas into clean, efficient code.
+                </span>
+                <span 
+                  className="absolute inset-0 text-primary pointer-events-none"
+                  style={primaryMaskStyle('about-text-2')}
+                >
+                  Currently seeking summer 2025 internship opportunities where I can contribute to
+                  meaningful projects and continue learning from experienced engineers. I enjoy
+                  tackling complex problems and translating ideas into clean, efficient code.
+                </span>
               </p>
             </div>
           </div>
