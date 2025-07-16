@@ -1,5 +1,7 @@
-import Link from "next/link";
 import { useState, useEffect } from "react";
+import About from "@/sections/about";
+import Nav from "@/sections/nav";
+import Link from "next/link";
 
 export default function Home() {
   const [mouseY, setMouseY] = useState(0);
@@ -141,27 +143,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border transition-shadow duration-300 hover:shadow-lg">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="text-lg font-medium hover:text-primary transition-colors duration-300">
-              Weston Clark
-            </Link>
-            <div className="flex items-center space-x-8">
-              <Link href="#work" className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
-                Work
-              </Link>
-              <Link href="#about" className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
-                About
-              </Link>
-              <Link href="#contact" className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
-                Contact
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Nav />
 
       {/* Main Content */}
       <main className="pt-20">
@@ -254,46 +236,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section id="about" className="container mx-auto px-6 py-16 border-t border-border">
-          <div className="max-w-3xl ml-auto text-right">
-            <h2 className="text-sm font-medium text-muted-foreground mb-8 tracking-wider uppercase text-left animate-slide-up">
-              About Me
-            </h2>
-            <div className="space-y-6 text-lg leading-relaxed text-left text-muted-foreground">
-              <p className="relative" id="about-text-1">
-                <span className="text-muted-foreground">
-                  I'm a Computer Science student at Cornell Engineering with a passion for building
-                  innovative software solutions. My interests span full-stack development, machine learning,
-                  and distributed systems.
-                </span>
-                <span 
-                  className="absolute inset-0 text-primary pointer-events-none"
-                  style={primaryMaskStyle('about-text-1')}
-                >
-                  I'm a Computer Science student at Cornell Engineering with a passion for building
-                  innovative software solutions. My interests span full-stack development, machine learning,
-                  and distributed systems.
-                </span>
-              </p>
-              <p className="relative" id="about-text-2">
-                <span className="text-muted-foreground">
-                  Currently seeking summer 2025 internship opportunities where I can contribute to
-                  meaningful projects and continue learning from experienced engineers. I enjoy
-                  tackling complex problems and translating ideas into clean, efficient code.
-                </span>
-                <span 
-                  className="absolute inset-0 text-primary pointer-events-none"
-                  style={primaryMaskStyle('about-text-2')}
-                >
-                  Currently seeking summer 2025 internship opportunities where I can contribute to
-                  meaningful projects and continue learning from experienced engineers. I enjoy
-                  tackling complex problems and translating ideas into clean, efficient code.
-                </span>
-              </p>
-            </div>
-          </div>
-        </section>
+        <About maskStyle={primaryMaskStyle} />
 
         {/* Selected Work */}
         <section className="container mx-auto px-6 py-16">
