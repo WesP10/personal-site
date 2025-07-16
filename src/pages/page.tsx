@@ -3,6 +3,8 @@ import About from "@/sections/about";
 import Nav from "@/sections/nav";
 import Link from "next/link";
 
+import Slideshow from "@/components/Slideshow";
+
 export default function Home() {
   const [mouseY, setMouseY] = useState(0);
   const [mouseX, setMouseX] = useState(0);
@@ -236,7 +238,21 @@ export default function Home() {
           </div>
         </section>
 
-        <About maskStyle={primaryMaskStyle} />
+
+        <section className="container mx-auto px-6 flex flex-col md:flex-row md:space-x-12 items-start py-8">
+          <div className="flex-1">
+            <About maskStyle={primaryMaskStyle} />
+          </div>
+          <div className="flex-1 flex justify-center md:justify-end mt-10 md:mt-0">
+            {/* Slideshow next to About */}
+            <div className="w-full max-w-xs">
+              <Slideshow
+                images={["/res/headshot.PNG", "/res/headshot.PNG", "/res/headshot.PNG"]}
+                altTexts={["Weston Clark Headshot", "Weston Clark Headshot 2", "Weston Clark Headshot 3"]}
+              />
+            </div>
+          </div>
+        </section>
 
         {/* Selected Work */}
         <section className="container mx-auto px-6 py-16">
