@@ -1,0 +1,58 @@
+/* Cloud Drift Animation */
+
+
+
+@keyframes cloudDrift1 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  25%  { transform: translate(20px, 10px) scale(1.01); }
+  50%  { transform: translate(0px, 20px) scale(1.02); }
+  75%  { transform: translate(-20px, 10px) scale(1.01); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes cloudDrift2 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  25%  { transform: translate(-15px, 18px) scale(1.01); }
+  50%  { transform: translate(-30px, 0px) scale(1.02); }
+  75%  { transform: translate(-15px, -18px) scale(1.01); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes cloudDrift3 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  25%  { transform: translate(18px, -18px) scale(1.01); }
+  50%  { transform: translate(0px, -30px) scale(1.02); }
+  75%  { transform: translate(-18px, -18px) scale(1.01); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes cloudDrift4 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  25%  { transform: translate(20px, 15px) scale(1.01); }
+  50%  { transform: translate(30px, 0px) scale(1.02); }
+  75%  { transform: translate(20px, -15px) scale(1.01); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.cloud-drift-1 {
+  animation: cloudDrift1 16s ease-in-out infinite;
+}
+.cloud-drift-2 {
+  animation: cloudDrift2 20s ease-in-out infinite;
+}
+.cloud-drift-3 {
+  animation: cloudDrift3 18s ease-in-out infinite;
+}
+.cloud-drift-4 {
+  animation: cloudDrift4 24s ease-in-out infinite;
+}
+
+/* Extra glassmorphism for backgrounds */
+.cloud-glass {
+  background: rgba(255,255,255,0.32);
+  box-shadow: 0 16px 48px 0 rgba(31, 38, 135, 0.22);
+  backdrop-filter: blur(18px) saturate(1.2);
+  border: 1.5px solid rgba(255,255,255,0.22);
+  /* Combine with previous glassmorphism styles */
+  filter: blur(0.2px);
+}
