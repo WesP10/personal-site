@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import '@/styles/RadialWave.css';
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const initialLocations = [
@@ -55,46 +54,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative">
-      {/* Purple Radial Gradients */}
-      <div className="absolute inset-0 pointer-events-none">
-        {gradientLocations.map((location, index) => (
-          <div
-            key={index}
-            className="absolute w-64 h-64 opacity-100 transition-opacity duration-5000"
-            style={{
-              top: location.top,
-              left: location.left,
-              transform: 'translate(-50%, -50%)'
-            }}
-          >
-            {/* Animated SVG ring */}
-            <svg
-              className="absolute animate-spin-slow"
-              width="256"
-              height="256"
-              viewBox="0 0 256 256"
-              style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-            >
-              <defs>
-                <radialGradient id="waveGradient" r="80%" cx="50%" cy="50%" >
-                  <stop offset="0%" stopColor="#00f" stopOpacity="0.6" />
-                  <stop offset="100%" stopColor="#00f" stopOpacity="0" />
-                </radialGradient>
-              </defs>
-              <circle
-                cx="128"
-                cy="128"
-                r="120"
-                fill="none"
-                stroke="url(#waveGradient)"
-                strokeWidth="8"
-                strokeDasharray="10 10"
-              />
-            </svg>
-          </div>
-        ))}
-      </div>
-
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border transition-shadow duration-300 hover:shadow-lg">
         <div className="container mx-auto px-6 py-4">
