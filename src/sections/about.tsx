@@ -6,7 +6,7 @@ interface AboutProps {
 
 const About: React.FC<AboutProps> = ({ maskStyle }) => {
   return (
-    <section id="about" className="container mx-auto px-6 py-16 border-t border-border">
+    <section id="about" className="container mx-auto px-6 py-16">
       <div className="max-w-3xl ml-auto text-right">
         <h2 className="text-sm font-medium text-muted-foreground mb-8 tracking-wider uppercase text-left animate-slide-up">
           About Me

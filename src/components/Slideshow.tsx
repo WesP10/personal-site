@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import Image from "next/image";
 
 interface SlideshowProps {
   images: string[];
@@ -17,10 +18,12 @@ export default function Slideshow({ images, altTexts = [], className = "" }: Sli
   return (
     <div className={`flex flex-col items-center ${className}`}>
       <div className="flex items-center justify-center min-h-[240px] w-full">
-        <img
+        <Image
           src={images[index]}
           alt={altTexts[index] || `Slide ${index + 1}`}
           className="max-h-80 max-w-full object-contain drop-shadow-xl"
+          width={600} // set your desired width
+          height={400} // set your desired height
           style={{ background: "none" }}
         />
       </div>
