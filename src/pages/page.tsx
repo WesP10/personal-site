@@ -247,8 +247,9 @@ export default function Home() {
             {/* Slideshow next to About */}
             <div className="w-full max-w-xs md:max-w-md lg:max-w-lg mb-8">
               <Slideshow
-                images={["/res/headshot.PNG", "/res/headshot.PNG", "/res/headshot.PNG"]}
-                altTexts={["Weston Clark Headshot", "Weston Clark Headshot 2", "Weston Clark Headshot 3"]}
+                images={["/res/Cornell+Blockchain.png", "/res/Cornell+Hyperloop.png", "/res/ROPlace.png", "/res/Luraph.png"]}
+                altTexts={["Cornell Blockchain", "Cornell Hyperloop", "ROPlace", "Luraph"]}
+                labels={["Blockchain", "Hyperloop", "ROPlace", "Luraph"]}
               />
             </div>
           </div>
