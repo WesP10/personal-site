@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import RolesDisplay from "@/components/roles-display";
 import StarField from "@/components/starfield";
 import Footer from "@/sections/footer";
 import ProjectCard from "@/components/project-card";
@@ -9,6 +10,13 @@ import Slideshow from "@/components/Slideshow";
 import Projects from "@/sections/projects";
 
 export default function Home() {
+  // Stable roles array for RolesDisplay
+  const rolesList = useMemo(() => [
+    "Software Engineer",
+    "Full Stack Developer",
+    "AI Enthusiast",
+    "Blockchain Builder"
+  ], []);
   const [mouseY, setMouseY] = useState(0);
   const [mouseX, setMouseX] = useState(0);
   const [blockOffsets, setBlockOffsets] = useState<{[key: string]: number}>({});
@@ -156,9 +164,9 @@ export default function Home() {
         <section
           className="relative flex flex-col md:flex-row justify-between items-center md:items-start md:space-x-16 w-full min-h-screen overflow-hidden"
           style={{
-            minHeight: '100vh',
-            paddingTop: '7rem',
-            paddingBottom: '2.5rem', // less bottom padding
+            minHeight: '90vh',
+            paddingTop: '12rem',
+            paddingBottom: '0', // less bottom padding
             paddingLeft: '4vw',
             paddingRight: '4vw',
             zIndex: 2,
@@ -170,14 +178,16 @@ export default function Home() {
           </div>
           {/* Content above starfield */}
           <div className="relative flex flex-col md:flex-row justify-between items-center md:items-start md:space-x-16 w-full z-10">
-            <div className="max-w-4xl text-center md:text-left flex-1 mb-16 md:mb-0 px-2">
+            <div className="max-w-4xl text-center md:text-left flex-1 mb-16 md:mb-0 px-2 flex flex-col items-center md:items-start">
+              <h1 className="text-4xl md:text-6xl font-bold mb-4">Weston Clark</h1>
+              <div className="text-xl md:text-2xl font-mono mb-8">
+                <RolesDisplay roles={rolesList} />
+              </div>
               {/* CTA Buttons and other content here (preserved) */}
             </div>
             <div
               className="flex flex-col items-center justify-center flex-1 min-h-[400px] md:mt-0 mt-10"
-              style={{
-                zIndex: 2,
-              }}
+              style={{ zIndex: 2 }}
             >
               {/* User Icon (no repulse, no drift) */}
               <div className="relative w-52 h-52 xl:w-80 xl:h-80 mb-12 flex items-center justify-center">
