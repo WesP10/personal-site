@@ -1,11 +1,9 @@
-import Starfield from '../components/starfield';
+import ExperienceSection from "@/sections/experience";
 
 export default function TestPage() {
   return (
-
     <div>
-      <h1>Test Page</h1>
-      <Starfield />
+      <ExperienceSection forceDark={true} />
     </div>
   );
 }

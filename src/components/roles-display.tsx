@@ -5,6 +5,7 @@ interface RolesDisplayProps {
   roles: string[];
   typingSpeed?: number; // ms per character
   pauseTime?: number; // ms to pause on full word
+  onRoleChange?: (index: number) => void;
 }
 
 
@@ -12,6 +13,7 @@ const RolesDisplay: React.FC<RolesDisplayProps> = ({
   roles,
   typingSpeed = 100,
   pauseTime = 1500,
+  onRoleChange,
 }) => {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayed, setDisplayed] = useState("");
@@ -48,12 +50,16 @@ const RolesDisplay: React.FC<RolesDisplayProps> = ({
       } else {
         timeout = setTimeout(() => {
           setTyping(true);
-          setRoleIndex((prev) => (prev + 1) % roles.length);
+          setRoleIndex((prev) => {
+            const next = (prev + 1) % roles.length;
+            if (onRoleChange) onRoleChange(next);
+            return next;
+          });
         }, typingSpeed);
       }
     }
     return () => clearTimeout(timeout);
-  }, [displayed, typing, roleIndex, roles, typingSpeed, pauseTime]);
+  }, [displayed, typing, roleIndex, roles, typingSpeed, pauseTime, onRoleChange]);
 
   // Reset everything if roles array changes
   useEffect(() => {

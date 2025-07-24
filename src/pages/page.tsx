@@ -5,11 +5,11 @@ import Footer from "@/sections/footer";
 import ProjectCard from "@/components/project-card";
 import About from "@/sections/about";
 import Nav from "@/sections/nav";
-import Link from "next/link";
 import Slideshow from "@/components/Slideshow";
 import Projects from "@/sections/projects";
+import ExperienceSection from "@/sections/experience";
 
-export default function Home() {
+export default function Page() {
   // Stable roles array for RolesDisplay
   const rolesList = useMemo(() => [
     "Software Engineer",
@@ -17,6 +17,15 @@ export default function Home() {
     "AI Enthusiast",
     "Blockchain Builder"
   ], []);
+  // Images to sync with roles
+  const roleImages = [
+    "/res/loop+toilet.jpg",
+    "/res/headshot.PNG",
+    "/res/running.jpg",
+    "/res/blockchain+trip.jpg"
+  ];
+  // Track current role index for syncing image
+  const [roleIndex, setRoleIndex] = useState(0);
   const [mouseY, setMouseY] = useState(0);
   const [mouseX, setMouseX] = useState(0);
   const [blockOffsets, setBlockOffsets] = useState<{[key: string]: number}>({});
@@ -101,21 +110,32 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleEvent = (e: MouseEvent | Event) => {
+      let clientY = 0;
+      if ('clientY' in e) {
+        clientY = e.clientY;
+        setMouseY(e.clientY);
+      } else {
+        // For scroll event, use last mouseY
+        clientY = mouseY;
+      }
       const newOffsets: {[key: string]: number} = {};
       ['about-text-1', 'about-text-2'].forEach(id => {
         const el = document.getElementById(id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          newOffsets[id] = e.clientY - rect.top;
+          newOffsets[id] = clientY - rect.top;
         }
       });
       setBlockOffsets(newOffsets);
-      setMouseY(e.clientY);
     };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    window.addEventListener('mousemove', handleEvent);
+    window.addEventListener('scroll', handleEvent);
+    return () => {
+      window.removeEventListener('mousemove', handleEvent);
+      window.removeEventListener('scroll', handleEvent);
+    };
+  }, [mouseY]);
 
   useEffect(() => {
     let frame = 0;
@@ -181,7 +201,7 @@ export default function Home() {
             <div className="max-w-4xl text-center md:text-left flex-1 mb-16 md:mb-0 px-2 flex flex-col items-center md:items-start">
               <h1 className="text-4xl md:text-6xl font-bold mb-4">Weston Clark</h1>
               <div className="text-xl md:text-2xl font-mono mb-8">
-                <RolesDisplay roles={rolesList} />
+                <RolesDisplay roles={rolesList} onRoleChange={setRoleIndex} />
               </div>
               {/* CTA Buttons and other content here (preserved) */}
             </div>
@@ -199,7 +219,7 @@ export default function Home() {
                     </clipPath>
                   </defs>
                   <image
-                    href="/res/loop+toilet.jpg"
+                    href={roleImages[roleIndex % roleImages.length]}
                     x="0" y="0" width="180" height="180"
                     clipPath="url(#hexMaskRounded)"
                     preserveAspectRatio="xMidYMid slice"
@@ -369,6 +389,9 @@ export default function Home() {
             />
           </div>
         </section>
+
+        {/* Experience Section */}
+        <ExperienceSection forceDark={true} />
 
         {/* Contact Footer */}
         <Footer />
