@@ -1,9 +1,9 @@
-import ExperienceSection from "@/sections/experience";
+import ExperienceSection from "@/components/experience-copy";
 
 export default function TestPage() {
   return (
     <div>
-      <ExperienceSection forceDark={true} />
+      <ExperienceSection />
     </div>
   );
 }
